@@ -5,31 +5,30 @@ module.exports = (function(){
     var el;
     var $el;
     var w = 0, h = 0;
-    var color;
+    var color; // scaling
 
-    var init = function(element, data, colors, stroke){
+
+    var init = function(element, data, opt){
+        // инициализируем стартовые перменные
         el = element;
         $el = document.querySelector(el);
         w = $el.clientWidth;
         h = $el.clientHeight;
         color = d3.scale.ordinal()
-            .range(colors);
+            .range(opt.colors);
 
-        console.log("init");
-        console.log(`Width: ${w}, height: ${h}`);
-
+        // создаем svg элемент с задаными параметрами
         var svg = d3.select(el).append('svg')
             .attr('width', w)
             .attr('height', h);
 
-
-        // ************************** Блок фотонового кружка
+        // Рисуем фоновый круг
         var groupDonutBg = svg.append('g')
             .attr('transform', 'translate(' + w/2 + ','+ h/2 +')');
 
         var arcBg = d3.svg.arc()
-            .innerRadius(w/4 - stroke*1.75)
-            .outerRadius(w/4 + stroke*0.75)
+            .innerRadius(w*opt.rFactor - (opt.stroke + opt.stroke*opt.bgFactor))
+            .outerRadius(w*opt.rFactor + opt.stroke*opt.bgFactor)
             .startAngle(0)
             .endAngle(Math.PI * 2);
 
@@ -38,15 +37,15 @@ module.exports = (function(){
             .attr('class', 'arc-bg')
             .append('path')
             .attr('d', arcBg)
-            .attr('fill', '#F5F8FD');
+            .attr('fill', opt.bgColor);
 
         // ************************** Собственно donut
         var groupDonut = svg.append('g')
             .attr('transform', 'translate(' + w/2 + ','+ h/2 +')');
 
         var arc = d3.svg.arc()
-            .innerRadius(w/4 - stroke)
-            .outerRadius(w/4);
+            .innerRadius(w*opt.rFactor - opt.stroke)
+            .outerRadius(w*opt.rFactor);
 
         var pie = d3.layout.pie()
             .value(function(d){ return d; })
@@ -56,10 +55,8 @@ module.exports = (function(){
             .enter()
             .append('g')
             .attr('class', 'arc')
-            .attr('stroke-width', stroke/2)
-            .attr('stroke', '#F5F8FD')
-            // .attr('stroke-opacity', 0.75)
-            ;
+            .attr('stroke-width', opt.stroke/2)
+            .attr('stroke', opt.bgColor);
 
         arcs.append('path')
             .attr('d', arc)
