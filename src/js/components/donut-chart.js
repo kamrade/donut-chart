@@ -7,6 +7,8 @@ module.exports = (function(){
     var w = 0, h = 0;
     var color; // color scaling
 
+    var tooltip = d3.select('#tooltip');
+
     var init = function(element, data, options){
         // инициализируем стартовые перменные
         el = element;
@@ -28,32 +30,16 @@ module.exports = (function(){
         color = d3.scale.ordinal()
             .range(opt.colors);
 
-        // создаем svg элемент с задаными параметрами
+        // main svg
         var svg = d3.select(el).append('svg')
             .attr('width', w)
             .attr('height', h);
 
-        // // Рисуем фоновый круг
-        // var groupDonutBg = svg.append('g')
-        //     .attr('transform', 'translate(' + w/2 + ','+ h/2 +')');
-        //
-        // var arcBg = d3.svg.arc()
-        //     .innerRadius(w*opt.rFactor - (opt.stroke + opt.stroke*opt.bgFactor))
-        //     .outerRadius(w*opt.rFactor + opt.stroke*opt.bgFactor)
-        //     .startAngle(0)
-        //     .endAngle(Math.PI * 2);
-        //
-        // var arcsBg = groupDonutBg
-        //     .append('g')
-        //     .attr('class', 'arc-bg')
-        //     .append('path')
-        //     .attr('d', arcBg)
-        //     .attr('fill', opt.bgColor);
-
-        // donut
+        // main group
         var groupDonut = svg.append('g')
             .attr('transform', 'translate(' + w/2 + ','+ h/2 +')');
 
+        // constructors
         var arc = d3.svg.arc()
             .innerRadius(innerRadius)
             .outerRadius(outerRadius);
@@ -81,7 +67,7 @@ module.exports = (function(){
             .transition()
             .delay(function(d, i) { return i * 300; })
             .duration(500)
-            .ease('elastic(0.8)')
+            .ease('cubic')
             .attrTween('d', function(d) {
                 var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
                 return function(t) {
@@ -90,28 +76,30 @@ module.exports = (function(){
                 };
             });
 
-            // item[0][0].on('mouseover', function(d) {
-            //     var x = d3.event.screenX;
-            //     var y = d3.event.screenY;
-            //     d3.select('#tooltip')
-            //         .text(d.value);
-            //     d3.select('#tooltip')
-            //         .style('left', function(){
-            //             return (x - 98) + 'px';
-            //         })
-            //         .style('top', function() {
-            //             return (y - 155) + 'px';
-            //         })
-            //         .style('opacity', 1);
-            // })
-            // .on('mouseout', function(){
-            //     d3.select('#tooltip')
-            //         .style('opacity', 0);
-            // })
-            // ;
+            // events
+            arcs
+            .on('mouseout', tooltipHide)
+            .on('click', function(d){
+                var x = d3.event.offsetX;
+                var y = d3.event.offsetY;
+                tooltip.text(d.value);
+                x = x - (tooltip[0][0].clientWidth/2);
+                y = y - (tooltip[0][0].clientHeight + 8);
+                tooltip.style('left', x + 'px')
+                    .style('top', y + 'px');
+                tooltipShow();
+            });
+    }; // endof function init
+
+    var tooltipShow = function(){
+        tooltip.style('opacity', 1);
+    };
+    var tooltipHide = function(){
+        tooltip.style('opacity', 0);
     };
 
     return {
-        init: init
+        init: init,
+        tooltipHide: tooltipHide
     };
 })();

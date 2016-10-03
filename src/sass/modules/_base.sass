@@ -9,14 +9,18 @@ body
 	background-color: $c_bg
 	color: $c_txt
 
+h1.title
+	text-align: center
+	margin-top: 32px
 
 #donut-chart
 	display: block
-	height: 400px
-	width: 400px
+	height: 200px
+	width: 200px
 	border: 1px solid #999
 	position: relative
 	z-index: 0
+	margin: 64px auto
 
 .donut-title
 	position: absolute
@@ -25,13 +29,14 @@ body
 	left: 50%
 	transform: translateY(-65%) translateX(-50%)
 	color: #787878
+	font-size: 100%
 	font-weight: 200
 	user-select: none
 	cursor: default
 
 	span
 		display: block
-		font-size: 48px
+		font-size: 200%
 		font-weight: 600
 		line-height: 40px
 		z-index: 0
@@ -39,6 +44,7 @@ body
 
 .arc-interactive
 	cursor: pointer
+
 
 #tooltip
 	position: absolute
@@ -67,6 +73,7 @@ body
 		&.value
 			font-weight: bold
 
+
 	&:after
 		content: ''
 		display: block
@@ -78,4 +85,4 @@ body
 		top: 100%
 		border-left: 8px solid transparent
 		border-right: 8px solid transparent
-		border-top: 10px solid rgba(red,0.75)
+		border-top: 8px solid rgba(red,0.75)
