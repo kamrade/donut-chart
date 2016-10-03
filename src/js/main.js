@@ -6,6 +6,28 @@
 var donutChart = require("./components/donut-chart");
 
 var data = [ 12397, 4882, 771 ];
+var dataCountries = [
+	{
+		name: "Poland",
+		total: 12990
+	},
+	{
+		name: "Germany",
+		total: 18552
+	},
+	{
+		name: "China",
+		total: 8403
+	},
+	{
+		name: "Guatemala",
+		total: 1403
+	},
+	{
+		name: "Greece",
+		total: 403
+	}
+]
 
 var data = [
     {
@@ -29,4 +51,4 @@ var options = {
     rFactor: 0.4,
     bgFactor: 0.5
 };
-donutChart.init("#donut-chart", data, options);
+donutChart.init("#donut-chart", dataCountries, options);
