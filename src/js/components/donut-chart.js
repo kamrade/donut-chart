@@ -48,7 +48,7 @@ module.exports = (function(){
             .sort(null)
             .startAngle(1.1*Math.PI)
             .endAngle(3.1*Math.PI)
-            .value(function(d) { return d.total; });
+            .value(function(d) { return d.value; });
 
         var arcs = groupDonut.selectAll('.arc')
             .data(pie(data))
@@ -62,7 +62,7 @@ module.exports = (function(){
         var item = arcs.append('path')
             .attr('class', 'arc-interactive')
             .attr('fill', d => {
-                return color(d.data.total)
+                return color(d.data.value)
             })
             .transition()
             .delay(function(d, i) { return i * 300; })
@@ -79,11 +79,10 @@ module.exports = (function(){
             // events
             arcs
             .on('mouseout', tooltipHide)
-            .on('mousemove', function(d){
-				// console.log(d.data.name);
+            .on('click', function(d){
                 var x = d3.event.offsetX;
                 var y = d3.event.offsetY;
-                tooltip.text(d.data.name + ": " + d.value);
+                tooltip.text(d.value);
                 x = x - (tooltip[0][0].clientWidth/2);
                 y = y - (tooltip[0][0].clientHeight + 8);
                 tooltip.style('left', x + 'px')
