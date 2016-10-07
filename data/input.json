@@ -1,0 +1,16 @@
+{
+    "payout": {
+        "captured": 275,
+        "declined": 148
+    },
+    "payment": {
+        "captured": 3657,
+        "chargeback": 490,
+        "declined": 12120,
+        "voided": 430
+    },
+    "refund": {
+        "captured": 719,
+        "declined": 183
+    }
+}

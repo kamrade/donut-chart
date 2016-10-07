@@ -36,11 +36,23 @@ html(lang="en")
 		
 	body
 		h1.title Donut Chart Module
-		div#donut-chart
-			h3.donut-title App. Rate
-				span.donut-value 65,1%
-			div#tooltip
-				div.inner-tooltip
+		div.app
+			div.donut-chart.all
+				div.values-container
+					h3.donut-title App. Rate
+					p.app-rate-value  
+			div.donut-chart.payment
+				div.values-container
+					h3.donut-title App. Rate
+					p.app-rate-value  
+			div.donut-chart.refund
+				div.values-container
+					h3.donut-title App. Rate
+					p.app-rate-value  
+			div.donut-chart.payout
+				div.values-container
+					h3.donut-title App. Rate
+					p.app-rate-value  
 
 		script(src="./assets/main.js")
 		
