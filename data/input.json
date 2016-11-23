@@ -4,10 +4,10 @@
         "declined": 148
     },
     "payment": {
-        "captured": 3657,
-        "chargeback": 490,
+        "captured": 15657,
+        "chargeback": 53,
         "declined": 12120,
-        "voided": 430
+        "voided": 43
     },
     "refund": {
         "captured": 719,
